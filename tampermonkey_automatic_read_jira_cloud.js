@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto Commit Message Or Branch Name
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  copies the JIRA Tag and description and preformats the commit message, can also create standard pathname
 // @author       https://github.com/Kantagonist
 // @match        https://<your-hostname-here>/*
@@ -33,6 +33,10 @@ function onKeydown(event) {
             const jiraNumberTagRegexPattern = /^.*\]/g
             trimmedTitle = trimmedTitle.replaceAll(jiraNumberTagRegexPattern, '').trim()
             trimmedTitle = '_' + trimmedTitle.replaceAll(' ', '-')
+            trimmedTitle = trimmedTitle.replaceAll(':', '')
+            trimmedTitle = trimmedTitle.replaceAll('ü', 'ue')
+            trimmedTitle = trimmedTitle.replaceAll('ö', 'oe')
+            trimmedTitle = trimmedTitle.replaceAll('ä', 'ae')
             const jiraTicketNumberPattern = /(?<=\[).*(?=])/g
             let ticketNumber = title.match(jiraTicketNumberPattern)
             result = ticketNumber + trimmedTitle
